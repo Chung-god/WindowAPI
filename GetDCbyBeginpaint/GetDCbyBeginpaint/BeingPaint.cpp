@@ -47,9 +47,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
 
 	switch (iMsg)
 	{
-	case WM_CREATE:
+	case WM_CREATE://run when it is made window first 
+		break;
+	case WM_PAINT://run when window show
 		hdc = BeginPaint(hwnd, &ps);
-		//happen output in here
+		TextOut(hdc, 100, 100, _T("Hello ¾È³ç"), _tcslen(_T("Hello ¾È³ç")));
 		EndPaint(hwnd, &ps); // you must call this if you call BeginPaint function
 		break;
 	case WM_DESTROY:
