@@ -44,6 +44,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
 	HDC hdc;//HDC Type manages memory section and can store attribute value about display section from memory section
 	PAINTSTRUCT ps;//structure to store information about output section
+	RECT rect;
 
 	switch (iMsg)
 	{
@@ -51,6 +52,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
 		break;
 	case WM_PAINT://run when window show
 		hdc = BeginPaint(hwnd, &ps);
+		rect.left = 50;//X1
+		rect.top = 40;//Y1
+		rect.right = 200;//X2
+		rect.bottom = 120;//Y2
+		DrawText(hdc, _T("HelloWorld"), 10, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+
 		TextOut(hdc, 100, 100, _T("Hello ¾È³ç"), _tcslen(_T("Hello ¾È³ç")));
 		EndPaint(hwnd, &ps); // you must call this if you call BeginPaint function
 		break;
