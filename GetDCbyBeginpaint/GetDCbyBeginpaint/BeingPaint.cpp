@@ -45,21 +45,25 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
 	HDC hdc;//HDC Type manages memory section and can store attribute value about display section from memory section
 	PAINTSTRUCT ps;
 	static TCHAR str[100];
-	static int count;
+	static int count,yPos;
 	
 	switch (iMsg)
 	{
 	case WM_CREATE://run when it is made window first 
 		count = 0;
+		yPos = 0;
 		break;
 	case WM_PAINT://run when window show
 		hdc = BeginPaint(hwnd,&ps);
-		TextOut(hdc, 0, 0, str, _tcslen(str));
+		TextOut(hdc, 0, yPos, str, _tcslen(str));
 		EndPaint(hwnd, &ps);
 		break;
 	case WM_CHAR:
 		if (wParam == VK_BACK && count > 0) count--;
-		else str[count++] = wParam;
+		else if (wParam == VK_RETURN) {
+			count = 0;
+			yPos += 20;
+		}else str[count++] = wParam;
 		str[count] = NULL;
 		InvalidateRgn(hwnd, NULL, TRUE);
 		break;
