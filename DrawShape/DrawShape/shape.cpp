@@ -42,14 +42,34 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
 	HDC hdc;
 	PAINTSTRUCT ps;
 	POINT point[10] = { {10,150},{250,30},{500,150},{350,300},{150,300} };
+	HPEN hPen, oldPen;
+	HBRUSH hBrush, oldBrush;
 
 	switch (iMsg) {
 	case WM_CREATE:
 		break;
 	case WM_PAINT:
 		hdc = BeginPaint(hwnd, &ps);
+		//pen line shape
+		hPen = CreatePen(PS_DOT, 1, RGB(255, 0,0 ));
+		oldPen = (HPEN)SelectObject(hdc, hPen);
+		
+		//shape color
+		hBrush = CreateSolidBrush(RGB(255, 255, 0));
+		oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
+
+		//shape
 		Ellipse(hdc, 0, 0, 80, 40);
 		Rectangle(hdc, 0, 40, 80, 80);
+		
+		//shape color register and delete
+		SelectObject(hdc, oldBrush);
+		DeleteObject(hBrush);
+
+		//pen line shape register and delete
+		SelectObject(hdc, oldPen);
+		DeleteObject(hPen);
+		
 		Polygon(hdc, point, 5);
 		EndPaint(hwnd, &ps);
 		break;
