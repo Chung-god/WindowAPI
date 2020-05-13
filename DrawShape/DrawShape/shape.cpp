@@ -41,6 +41,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
 	HDC hdc;
 	PAINTSTRUCT ps;
+	POINT point[10] = { {10,150},{250,30},{500,150},{350,300},{150,300} };
 
 	switch (iMsg) {
 	case WM_CREATE:
@@ -48,6 +49,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
 	case WM_PAINT:
 		hdc = BeginPaint(hwnd, &ps);
 		Ellipse(hdc, 0, 0, 80, 40);
+		Rectangle(hdc, 0, 40, 80, 80);
+		Polygon(hdc, point, 5);
 		EndPaint(hwnd, &ps);
 		break;
 	case WM_DESTROY:
