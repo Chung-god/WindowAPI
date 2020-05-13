@@ -58,11 +58,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
 		EndPaint(hwnd, &ps);
 		break;
 	case WM_CHAR:
-		hdc = GetDC(hwnd);
-		str[count++] = wParam;
+		if (wParam == VK_BACK && count > 0) count--;
+		else str[count++] = wParam;
 		str[count] = NULL;
-		TextOut(hdc, 0, 0, str, _tcslen(str));
-		ReleaseDC(hwnd, hdc);
+		InvalidateRgn(hwnd, NULL, TRUE);
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
