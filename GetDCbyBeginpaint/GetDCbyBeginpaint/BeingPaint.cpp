@@ -46,6 +46,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
 	PAINTSTRUCT ps;
 	static TCHAR str[100];
 	static int count,yPos;
+	RECT rt = { 0,0,1000,1000 };
 	
 	switch (iMsg)
 	{
@@ -55,15 +56,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam) {
 		break;
 	case WM_PAINT://run when window show
 		hdc = BeginPaint(hwnd,&ps);
-		TextOut(hdc, 0, yPos, str, _tcslen(str));
+		DrawText(hdc, str, _tcslen(str), &rt, DT_TOP | DT_LEFT);
 		EndPaint(hwnd, &ps);
 		break;
 	case WM_CHAR:
 		if (wParam == VK_BACK && count > 0) count--;
-		else if (wParam == VK_RETURN) {
-			count = 0;
-			yPos += 20;
-		}else str[count++] = wParam;
+		else str[count++] = wParam;
 		str[count] = NULL;
 		InvalidateRgn(hwnd, NULL, TRUE);
 		break;
